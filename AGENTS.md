@@ -3,9 +3,17 @@
 ## Source of truth
 
 1. **Read [docs/PRD.md](docs/PRD.md) before making product or AI-personalization decisions.**
-2. Treat PRD v0.3 on main as the current development baseline. Future PRD changes require review and explicit approval. Future PRD changes require review and explicit approval.
+2. Treat PRD v0.3 on main as the current development baseline. Future PRD changes require review and explicit approval.
 3. Treat **확정 / 제안 / 미결정** separately. Never turn a proposal into a requirement without approval.
 4. Keep new work narrowly scoped: no unnecessary framework, agent graph, vector DB, or schema proliferation.
+
+## API and data contracts
+
+- Read **[docs/API_SPEC.md](docs/API_SPEC.md)** and **[docs/DATA_MODEL.md](docs/DATA_MODEL.md)** before changing API handlers, Pydantic/Java DTOs, user-setting storage, or notice/recommendation formats.
+- Preserve the distinction between **confirmed behavioral rules** and **draft endpoint paths, field names, table names**; do not silently treat examples as team-approved contracts.
+- Coordinate A/DB and C-facing fields with those owners. In the meantime use explicitly labeled mock data and adapters.
+- Implement accepted contracts in code and add executable contract tests for malformed input, authorization, version conflicts, and framework swaps.
+- If an interface is approved/changed, update both contract docs and relevant tests in the same PR.
 
 ## Architecture guardrails
 
