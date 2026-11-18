@@ -7,6 +7,8 @@
 - [PRD v0.3 — 제품 요구사항 및 B 파트 AI 개인화 설계](docs/PRD.md)
 - [AGENTS.md — 개발 시 PRD 우선 확인 규칙](AGENTS.md)
 - [개발 프로세스 — 코드 강제·실패 테스트·CI 검증](docs/DEVELOPMENT_PROCESS.md)
+- [API 계약 — B 파트 확정 규칙과 API 초안](docs/API_SPEC.md)
+- [데이터 구조 — 개인 설정·변경안·공지·추천 연동](docs/DATA_MODEL.md)
 
 > PRD v0.3는 핵심 보안·품질 규칙 및 LangChain/LangGraph 도입·롤백 전략을 반영한 개발 기준선입니다. **확정**과 **제안·미결정**을 구분하며, 기능 변경은 논의 및 검증 후 PR로 반영합니다.
 
