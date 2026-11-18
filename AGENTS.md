@@ -3,7 +3,7 @@
 ## Source of truth
 
 1. **Read [docs/PRD.md](docs/PRD.md) before making product or AI-personalization decisions.**
-2. Treat PRD v0.2 as the proposed updated baseline; merge through review. Future PRD changes require review and explicit approval.
+2. Treat PRD v0.3 on main as the current development baseline. Future PRD changes require review and explicit approval. Future PRD changes require review and explicit approval.
 3. Treat **확정 / 제안 / 미결정** separately. Never turn a proposal into a requirement without approval.
 4. Keep new work narrowly scoped: no unnecessary framework, agent graph, vector DB, or schema proliferation.
 
@@ -14,6 +14,14 @@
 - Core handles context selection, LLM invocation, output validation, notice relevance analysis.
 - LLM output is an **untrusted proposed change**, never a direct DB command.
 - B part **adopts LangChain and LangGraph** for model/tool integration and workflow/state orchestration. Keep a minimal **Claude SDK direct adapter** and **plain-Python workflow fallback**; switching must not change the Backend API, Pydantic domain contracts, DB ownership, or approval rules. Do not introduce complex graphs for trivial steps.
+
+## Mandatory code-enforced development process
+
+- **Read [docs/DEVELOPMENT_PROCESS.md](docs/DEVELOPMENT_PROCESS.md)** and follow its invariant → runtime guard → negative test → CI evidence workflow.
+- Text instructions and prompts **do not enforce security**. Each critical restriction must be implemented at the correct trust boundary, with failure tests.
+- Each feature PR should identify the actual code enforcing the rule and demonstrate that forbidden behavior is rejected.
+- Once executable source exists, configure real tests in GitHub Actions and protect merges using required status checks; do not claim these protections are enabled before checking.
+- Use [.github/pull_request_template.md](.github/pull_request_template.md) for evidence, but treat checked boxes alone as insufficient proof.
 
 ## Engineering and tests
 
