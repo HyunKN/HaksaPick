@@ -65,6 +65,15 @@
       "target_condition_id": null,
       "condition": {
         "scope": "notices",
+        "polarity": "include",
+        "text": "장학금"
+      }
+    },
+    {
+      "operation": "add",
+      "target_condition_id": null,
+      "condition": {
+        "scope": "notices",
         "polarity": "exclude",
         "text": "국가장학금"
       }
