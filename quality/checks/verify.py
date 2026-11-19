@@ -90,7 +90,7 @@ def validate(root: Path) -> list[str]:
             if not (root / "frontend" / name).is_file():
                 errors.append(f"Frontend source exists but frontend/{name} is missing")
         tests = root / "frontend"
-        if not any(tests.rglob(pattern) for pattern in ("*.test.ts", "*.test.tsx", "*.spec.ts", "*.spec.tsx")):
+        if not any(path for pattern in ("*.test.ts", "*.test.tsx", "*.spec.ts", "*.spec.tsx") for path in tests.rglob(pattern)):
             errors.append("Frontend source exists but a frontend test file is missing")
     return errors
 
