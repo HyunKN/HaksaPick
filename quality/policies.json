@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "description": "Critical behavioral invariants; planned means there is no verified runtime enforcement yet.",
+  "rules": [
+    {
+      "id": "PREF-APPROVAL",
+      "rule": "Approval is mandatory before confirmed preferences change",
+      "runtime_owner": "backend/src/main",
+      "test_owner": "backend/src/test",
+      "status": "planned",
+      "evidence": {}
+    },
+    {
+      "id": "PREF-OWNERSHIP",
+      "rule": "Only the authenticated owner may access or change preferences",
+      "runtime_owner": "backend/src/main",
+      "test_owner": "backend/src/test",
+      "status": "planned",
+      "evidence": {}
+    },
+    {
+      "id": "PREF-VERSION",
+      "rule": "Stale or duplicate approvals never overwrite or double-apply settings",
+      "runtime_owner": "backend/src/main",
+      "test_owner": "backend/src/test",
+      "status": "planned",
+      "evidence": {}
+    },
+    {
+      "id": "LLM-UNTRUSTED",
+      "rule": "LLM or tool output cannot authorize writes and malformed outputs are rejected",
+      "runtime_owner": "core/app",
+      "test_owner": "core/tests",
+      "status": "planned",
+      "evidence": {}
+    },
+    {
+      "id": "NOTICE-UNTRUSTED",
+      "rule": "Untrusted notice contents cannot trigger privileged actions",
+      "runtime_owner": "core/app",
+      "test_owner": "core/tests",
+      "status": "planned",
+      "evidence": {}
+    },
+    {
+      "id": "RECOMMEND-EVIDENCE",
+      "rule": "Recommendations preserve evidence and distinguish relevance from eligibility",
+      "runtime_owner": "core/app",
+      "test_owner": "core/tests",
+      "status": "planned",
+      "evidence": {}
+    }
+  ]
+}

@@ -28,7 +28,9 @@
 - **Read [docs/DEVELOPMENT_PROCESS.md](docs/DEVELOPMENT_PROCESS.md)** and follow its invariant → runtime guard → negative test → CI evidence workflow.
 - Text instructions and prompts **do not enforce security**. Each critical restriction must be implemented at the correct trust boundary, with failure tests.
 - Each feature PR should identify the actual code enforcing the rule and demonstrate that forbidden behavior is rejected.
-- Once executable source exists, configure real tests in GitHub Actions and protect merges using required status checks; do not claim these protections are enabled before checking.
+- Keep development-only policy/check scripts in [quality/](quality/README.md), runtime enforcement in Backend/Core, and functional tests next to their module. Do not ship `quality/` as a runtime dependency.
+- The Quality Gate workflow exists at [.github/workflows/quality-gate.yml](.github/workflows/quality-gate.yml). Once a service source directory exists, its CI job must execute real tests; missing tests are failures.
+- Protect `main` with required PR/status checks `policy-check`, `core-tests`, `backend-tests`, `frontend-tests` in GitHub repository settings. Do not claim automatic merge blocking until the settings are actually applied and verified.
 - Use [.github/pull_request_template.md](.github/pull_request_template.md) for evidence, but treat checked boxes alone as insufficient proof.
 
 ## Engineering and tests
