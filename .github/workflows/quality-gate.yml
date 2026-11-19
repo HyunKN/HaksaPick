@@ -1,0 +1,86 @@
+name: Quality Gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  policy-check:
+    name: policy-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check repository policy and test boundaries
+        run: python quality/checks/verify.py
+      - name: Negative tests for the policy checker
+        run: python -m unittest discover -s quality/tests -p 'test_*.py' -v
+
+  core-tests:
+    name: core-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute Core tests when source exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -d core/app ]]; then
+            python -m pip install poetry
+            cd core
+            poetry install --no-interaction
+            poetry run pytest tests
+          else
+            echo "Core source not added yet. No Core tests were run."
+          fi
+
+  backend-tests:
+    name: backend-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Execute Backend tests when source exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -d backend/src/main ]]; then
+            cd backend
+            chmod +x ./gradlew
+            ./gradlew --no-daemon test
+          else
+            echo "Backend source not added yet. No Backend tests were run."
+          fi
+
+  frontend-tests:
+    name: frontend-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Execute Frontend build and tests when source exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -d frontend/src ]]; then
+            cd frontend
+            npm ci
+            npm run build
+            npm run test -- --run
+          else
+            echo "Frontend source not added yet. No Frontend tests were run."
+          fi
