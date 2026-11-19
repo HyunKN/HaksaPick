@@ -62,6 +62,22 @@ class QualityGateTests(unittest.TestCase):
             path.write_text(json.dumps(document))
             self.assertTrue(any("Duplicate" in x for x in module.validate(root)))
 
+    def test_backend_without_tests_fails(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.make_repo(root)
+            (root / "backend/src/main").mkdir(parents=True)
+            self.assertTrue(any("backend/src/test" in x for x in module.validate(root)))
+
+    def test_frontend_without_tests_fails(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.make_repo(root)
+            (root / "frontend/src").mkdir(parents=True)
+            (root / "frontend/package.json").write_text("{}", encoding="utf-8")
+            (root / "frontend/package-lock.json").write_text("{}", encoding="utf-8")
+            self.assertTrue(any("Frontend source exists but a frontend test" in x for x in module.validate(root)))
+
     def test_false_enforced_claim_fails(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
