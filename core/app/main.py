@@ -39,9 +39,11 @@ def create_app(interpreter: DialogueInterpreter | None = None) -> FastAPI:
         except (ValueError, ValidationError):
             logger.warning("Core dialogue output rejected; trace_id=%s", request.trace_id)
             raise HTTPException(status_code=502, detail="invalid_llm_output") from None
-        except Exception:
-            logger.exception(
-                "Core dialogue processing failed; trace_id=%s", request.trace_id
+        except Exception as exc:
+            # Do not print exception text/tracebacks: providers may echo private inputs.
+            logger.error(
+                "Core dialogue processing failed; trace_id=%s error_type=%s",
+                request.trace_id, type(exc).__name__,
             )
             raise HTTPException(status_code=503, detail="llm_unavailable") from None
 
